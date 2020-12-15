@@ -7,7 +7,6 @@ import android.content.ServiceConnection
 import android.os.*
 import android.util.Log
 import androidx.core.os.bundleOf
-//import com.google.gson.Gson
 
 /**
  * THIS FUNC IS USED TO PUSH NOTIFICATIONS TO OTHER APPS

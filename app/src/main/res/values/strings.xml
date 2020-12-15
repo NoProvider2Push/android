@@ -3,25 +3,16 @@
     <string name="action_settings">Settings</string>
 
     <!-- Strings used on the main page -->
-    <string name="main_about">[todo] About this app</string>
+    <string name="main_about">NoProvider2Push is able to provide push notifications without a push provider. For this, it needs a static address even with the roaming. It is achievable with a custom network such as a VPN or the yggdrasil network.</string>
     <string name="main_applications_title">Registered applications</string>
-
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <!-- Strings used for configuration -->
     <string name="settings_address_label">Your address</string>
-    <string name="settings_address_information">[todo] information about the address</string>
+    <string name="settings_address_information">This is your static address on your custom network. It is necessary to know where to forward the notifications.</string>
     <string name="settings_address_hint">[::1]</string>
     <string name="settings_gateway_label">Your gateway</string>
-    <string name="settings_gateway_information">[todo] information about the gateway</string>
+    <string name="settings_gateway_information">This is the proxy to forward requests inside your custom network, to reach your phone from the Internet.</string>
     <string name="settings_gateway_hint">https://gateway.example.tld</string>
     <string name="settings_save_button">Save</string>
-    <string name="help">\?</string>
+    <string name="help"></string>
 </resources>

@@ -102,4 +102,22 @@ class MessagingDatabase(context: Context) : SQLiteOpenHelper(context, DB_NAME, n
             if (cursor.moveToFirst()) cursor.getString(cursor.getColumnIndex(FIELD_SERVICE_NAME)) else ""
         }
     }
+
+    fun listApps(): List<String>{
+        val db = readableDatabase
+        val projection = arrayOf(FIELD_PACKAGE_NAME)
+        return db.query(
+                TABLE_APPS,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+        ).use{ cursor ->
+            generateSequence { if (cursor.moveToNext()) cursor else null }
+                    .map{ it.getString(it.getColumnIndex(FIELD_PACKAGE_NAME)) }
+                    .toList()
+        }
+    }
 }
