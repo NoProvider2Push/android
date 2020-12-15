@@ -36,7 +36,7 @@ fun notifyClient(context: Context, clientPackage: String, message: String){
                         null,
                         TYPE_MESSAGE, 0, 0
                 )
-                msg.data = bundleOf("json" to message)
+                msg.data = bundleOf("message" to message)
                 gService.send(msg)
                 Log.i("notifyClient","Notification sent")
             } catch(e: RemoteException) {

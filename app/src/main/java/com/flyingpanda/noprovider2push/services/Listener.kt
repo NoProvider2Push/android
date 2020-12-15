@@ -35,8 +35,10 @@ class Listener: Service(){
                         call.respond("ok")
                         val clientPackage = call.parameters["clientPackage"]
                         Log.i("Listener", "Received request to $clientPackage")
-                        val parameters = call.receiveParameters().toMap()
-                        clientPackage?.let { notifyClient(context, clientPackage, Gson().toJson(parameters)) }
+                        val parameters = call.receiveText()
+                        clientPackage?.let {
+                            notifyClient(context, clientPackage, parameters)
+                        }
                     }
                 }
             }.start(wait = false)
