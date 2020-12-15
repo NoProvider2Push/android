@@ -24,52 +24,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
         startListener(this)
-
-        listView = findViewById<ListView>(R.id.applications_list)
-        val db = MessagingDatabase(this)
-        var appList = db.listApps()
-        db.close()
-        listView.adapter = ArrayAdapter(
-                this,
-                android.R.layout.simple_list_item_1,
-                appList
-        )
-        listView.setOnItemLongClickListener(
-                fun(parent: AdapterView<*>, v: View, position: Int, id: Long): Boolean {
-                    val alert: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(
-                            this@MainActivity)
-                    alert.setTitle("Unregistering")
-                    alert.setMessage("Are you sure to unregister ${appList[position]} ?")
-                    alert.setPositiveButton("YES") { dialog, which ->
-                        val db = MessagingDatabase(this)
-                        db.forceUnregisterApp(appList[position])
-                        appList = db.listApps()
-                        db.close()
-                        listView.adapter = ArrayAdapter(
-                                this,
-                                android.R.layout.simple_list_item_1,
-                                appList
-                        )
-                        dialog.dismiss()
-                    }
-                    alert.setNegativeButton("NO") { dialog, which -> dialog.dismiss() }
-                    alert.show()
-                    return true
-                }
-        )
+        setListView()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if(hasFocus) {
-            val db = MessagingDatabase(this)
-            val appList = db.listApps()
-            db.close()
-            listView.adapter = ArrayAdapter(
-                    this,
-                    android.R.layout.simple_list_item_1,
-                    appList
-            )
+            setListView()
         }
     }
 
@@ -93,5 +54,40 @@ class MainActivity : AppCompatActivity() {
     private fun startListener(context: Context){
         val serviceIntent = Intent(context, Listener::class.java)
         context.startService(serviceIntent)
+    }
+
+    private fun setListView(){
+        listView = findViewById<ListView>(R.id.applications_list)
+        val db = MessagingDatabase(this)
+        var appList = db.listApps()
+        db.close()
+        listView.adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_list_item_1,
+                appList
+        )
+        listView.setOnItemLongClickListener(
+                fun(parent: AdapterView<*>, v: View, position: Int, id: Long): Boolean {
+                    val alert: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(
+                            this@MainActivity)
+                    alert.setTitle("Unregistering")
+                    alert.setMessage("Are you sure to unregister ${appList[position]} ?")
+                    alert.setPositiveButton("YES") { dialog, _ ->
+                        val db = MessagingDatabase(this)
+                        db.forceUnregisterApp(appList[position])
+                        appList = db.listApps()
+                        db.close()
+                        listView.adapter = ArrayAdapter(
+                                this,
+                                android.R.layout.simple_list_item_1,
+                                appList
+                        )
+                        dialog.dismiss()
+                    }
+                    alert.setNegativeButton("NO") { dialog, _ -> dialog.dismiss() }
+                    alert.show()
+                    return true
+                }
+        )
     }
 }
