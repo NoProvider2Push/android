@@ -2,6 +2,7 @@ package com.flyingpanda.noprovider2push.activities
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -53,7 +54,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun startListener(context: Context){
         val serviceIntent = Intent(context, Listener::class.java)
-        context.startService(serviceIntent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(serviceIntent)
+        }else{
+            context.startService(serviceIntent)
+        }
     }
 
     private fun setListView(){
