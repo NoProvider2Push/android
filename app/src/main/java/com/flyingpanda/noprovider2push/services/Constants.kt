@@ -1,14 +1,20 @@
 package com.flyingpanda.noprovider2push.services
 
 /**
- * Command to the service to register a client, receiving callbacks
- * from the service.  The Message's replyTo field must be a Messenger of
- * the client where callbacks should be sent.
+ * Constants as defined on the specs
+ * https://raw.githubusercontent.com/UnifiedPush/UP-spec/main/constants.md
  */
-const val TYPE_CLIENT_STARTED = 1
-const val TYPE_REGISTER_CLIENT = 2
-const val TYPE_REGISTERED_CLIENT = 3
-const val TYPE_UNREGISTER_CLIENT = 4
-const val TYPE_UNREGISTERED_CLIENT = 5
-const val TYPE_MESSAGE = 6
-const val TYPE_CHANGED_URL = 7
+
+const val TYPE_CONNECTOR_REGISTER = 0x11
+const val TYPE_CONNECTOR_REGISTER_SUCCESS = 0x12
+const val TYPE_CONNECTOR_REGISTER_FAILED = 0x10
+const val TYPE_CONNECTOR_UNREGISTER = 0x21
+const val TYPE_CONNECTOR_UNREGISTER_ACKNOWLEDGE = 0x22
+
+const val TYPE_DISTRIBUTOR_MESSAGE = 0x91
+const val TYPE_DISTRIBUTOR_MESSAGE_ACKNOWLEDGE = 0x92
+const val TYPE_DISTRIBUTOR_ENDPOINT_CHANGED = 0xA1
+const val TYPE_DISTRIBUTOR_UNREGISTERED = 0xB1
+
+const val PREF_MASTER = "UP-lib"
+const val PREF_MASTER_KEY_ID = "UP-lib_id"

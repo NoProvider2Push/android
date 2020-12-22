@@ -34,7 +34,7 @@ fun notifyClient(context: Context, clientPackage: String, message: String){
             try {
                 val msg = Message.obtain(
                         null,
-                        TYPE_MESSAGE, 0, 0
+                        TYPE_DISTRIBUTOR_MESSAGE, 0, 0
                 )
                 msg.data = bundleOf("message" to message)
                 gService.send(msg)

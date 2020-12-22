@@ -18,18 +18,18 @@ class SettingsActivity : AppCompatActivity() {
         prefs = getSharedPreferences("Config", Context.MODE_PRIVATE)
         setContentView(R.layout.activity_settings)
         val address = prefs?.getString("address", "")
-        val gateway = prefs?.getString("gateway", "")
+        val proxy = prefs?.getString("proxy", "")
         findViewById<EditText>(R.id.settings_address_value).setText(address)
-        findViewById<EditText>(R.id.settings_gateway_value).setText(gateway)
+        findViewById<EditText>(R.id.settings_proxy_value).setText(proxy)
     }
 
     fun save(view: View){
         val address = findViewById<EditText>(R.id.settings_address_value).text.toString()
-        val gateway = findViewById<EditText>(R.id.settings_gateway_value).text.toString()
+        val proxy = findViewById<EditText>(R.id.settings_proxy_value).text.toString()
         Log.i("save",address)
         val editor = prefs!!.edit()
         editor.putString("address", address)
-        editor.putString("gateway", gateway)
+        editor.putString("proxy", proxy)
         editor.commit()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

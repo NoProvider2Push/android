@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/settings_address_value" />
 
     <EditText
-        android:id="@+id/settings_gateway_value"
+        android:id="@+id/settings_proxy_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -78,7 +78,7 @@
         android:text="@string/settings_save_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_gateway_value" />
+        app:layout_constraintTop_toBottomOf="@+id/settings_proxy_value" />
 
     <TextView
         android:id="@+id/textView"

@@ -24,9 +24,9 @@ class RegisterService : Service() {
     private class IncomingHandler(var service: RegisterService) : Handler(Looper.getMainLooper()) {
 
         override fun handleMessage(msg: Message) {
+            Log.i("test","${msg.what}")
             when (msg.what) {
-                TYPE_CLIENT_STARTED -> simpleAnswer(msg, TYPE_CLIENT_STARTED)
-                TYPE_REGISTER_CLIENT -> {
+                TYPE_CONNECTOR_REGISTER ->{
                     val uid = msg.sendingUid
                     val msgData = msg.data
                     thread(start = true) {
@@ -35,14 +35,14 @@ class RegisterService : Service() {
                     }.join()
                     sendInfo(msg)
                 }
-                TYPE_UNREGISTER_CLIENT -> {
+                TYPE_CONNECTOR_UNREGISTER ->{
                     val uid = msg.sendingUid
                     val msgData = msg.data
                     thread(start = true) {
                         unregisterApp(msgData, uid)
                         Log.i("RegisterService","Unregistration is finished")
                     }
-                    simpleAnswer(msg, TYPE_UNREGISTERED_CLIENT)
+                    simpleAnswer(msg, TYPE_CONNECTOR_UNREGISTER_ACKNOWLEDGE)
                 }
                 else -> super.handleMessage(msg)
             }
@@ -102,11 +102,10 @@ class RegisterService : Service() {
                 // db.getToken also remove the token in the db
                 try {
                     val address = service.settings?.getString("address","")
-                    val gateway = service.settings?.getString("gateway","") +
+                    val endpoint = service.settings?.getString("proxy","") +
                             "/$address:$listeningPort/$clientPackageName/"
-                    val answer = Message.obtain(null, TYPE_REGISTERED_CLIENT, 0, 0)
-                    answer.data = bundleOf("gateway" to gateway,
-                                                "address" to address)
+                    val answer = Message.obtain(null, TYPE_CONNECTOR_REGISTER_SUCCESS, 0, 0)
+                    answer.data = bundleOf("endpoint" to endpoint)
                     msg.replyTo?.send(answer)
                 } catch (e: RemoteException) {
                 }
