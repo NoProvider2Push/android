@@ -9,6 +9,9 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import com.flyingpanda.noprovider2push.R
+import com.flyingpanda.noprovider2push.services.MessagingDatabase
+import com.flyingpanda.noprovider2push.services.listeningPort
+import com.flyingpanda.noprovider2push.services.sendEndpoint
 
 class SettingsActivity : AppCompatActivity() {
     private var prefs: SharedPreferences? = null
@@ -31,6 +34,15 @@ class SettingsActivity : AppCompatActivity() {
         editor.putString("address", address)
         editor.putString("proxy", proxy)
         editor.commit()
+        val db = MessagingDatabase(this)
+        var appList = db.listApps()
+        db.close()
+        val settings = this.getSharedPreferences("Config", Context.MODE_PRIVATE)
+        appList.forEach{
+            val endpoint = settings?.getString("proxy","") +
+                    "/$address:$listeningPort/$it/"
+            sendEndpoint(this,it,endpoint)
+        }
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
