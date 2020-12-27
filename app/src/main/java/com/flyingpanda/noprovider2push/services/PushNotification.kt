@@ -1,58 +1,52 @@
 package com.flyingpanda.noprovider2push.services
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
-import android.os.*
 import android.util.Log
-import androidx.core.os.bundleOf
 
 /**
- * THIS FUNC IS USED TO PUSH NOTIFICATIONS TO OTHER APPS
- * It is called from the thread in WebSocketService
+ * These functions are used to send messages to other apps
  */
 
-/**
- * Function to notify client
- */
-fun notifyClient(context: Context, clientPackage: String, message: String){
+fun sendMessage(context: Context, application: String, message: String){
+    val token = getToken(context,application)!!
+    val broadcastIntent = Intent()
+    broadcastIntent.`package` = application
+    broadcastIntent.action = MESSAGE
+    broadcastIntent.putExtra("token", token)
+    broadcastIntent.putExtra("message", message)
+    context.sendBroadcast(broadcastIntent)
+}
+
+fun sendEndpoint(context: Context, application: String, endpoint: String) {
+    val token = getToken(context,application)!!
+    val broadcastIntent = Intent()
+    broadcastIntent.`package` = application
+    broadcastIntent.action = NEW_ENDPOINT
+    broadcastIntent.putExtra("token", token)
+    broadcastIntent.putExtra("endpoint", endpoint)
+    context.sendBroadcast(broadcastIntent)
+}
+
+fun sendUnregistered(context: Context, application: String, needToken: Boolean){
+    val token = getToken(context,application).let{
+        if(it.isNullOrEmpty() and needToken) return else it
+    }
+
+    val broadcastIntent = Intent()
+    broadcastIntent.`package` = application
+    broadcastIntent.action = UNREGISTERED
+    broadcastIntent.putExtra("token", token)
+    context.sendBroadcast(broadcastIntent)
+}
+
+fun getToken(context: Context, application: String): String?{
     val db = MessagingDatabase(context)
-    val service = db.getServiceName(clientPackage)
-    if (service.isBlank()) {
-        Log.w("notifyClient","No service found for $clientPackage")
-        return
+    val token = db.getToken(application)
+    db.close()
+    if (token.isBlank()) {
+        Log.w("notifyClient", "No token found for $application")
+        return null
     }
-    val gHandlerThread = HandlerThread(clientPackage)
-    gHandlerThread.start()
-
-    val gConnection: ServiceConnection = object : ServiceConnection {
-        override fun onServiceConnected(className: ComponentName,
-                                        service: IBinder) {
-            val gService = Messenger(service)
-            Log.i("notifyClient","Remote service connected")
-            try {
-                val msg = Message.obtain(
-                        null,
-                        TYPE_DISTRIBUTOR_MESSAGE, 0, 0
-                )
-                msg.data = bundleOf("message" to message)
-                gService.send(msg)
-                Log.i("notifyClient","Notification sent")
-            } catch(e: RemoteException) {
-                Log.e("notifyClient","Something went wrong", e)
-            } finally {
-                context.unbindService(this)
-                gHandlerThread.quit()
-            }
-        }
-
-        override fun onServiceDisconnected(className: ComponentName) {
-            gHandlerThread.quit()
-        }
-    }
-
-    val intent = Intent()
-    intent.component = ComponentName(clientPackage, service)
-    context.bindService(intent, gConnection, Context.BIND_AUTO_CREATE)
+    return token
 }

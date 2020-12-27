@@ -11,13 +11,11 @@ private const val DB_VERSION = 1
 class MessagingDatabase(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION){
     private val CREATE_TABLE_APPS = "CREATE TABLE apps (" +
             "package_name TEXT," +
-            "uid INT," +
-            "service_name TEXT," +
+            "token TEXT," +
             "PRIMARY KEY (package_name));"
     private val TABLE_APPS = "apps"
     private val FIELD_PACKAGE_NAME = "package_name"
-    private val FIELD_UID = "uid"
-    private val FIELD_SERVICE_NAME = "service_name"
+    private val FIELD_TOKEN = "token"
 
     override fun onCreate(db: SQLiteDatabase){
         db.execSQL(CREATE_TABLE_APPS)
@@ -27,20 +25,19 @@ class MessagingDatabase(context: Context) : SQLiteOpenHelper(context, DB_NAME, n
         throw IllegalStateException("Upgrades not supported")
     }
 
-    fun registerApp(packageName: String, uid: Int, serviceName: String){
+    fun registerApp(packageName: String, token: String){
         val db = writableDatabase
         val values = ContentValues().apply {
             put(FIELD_PACKAGE_NAME, packageName)
-            put(FIELD_UID, uid.toString())
-            put(FIELD_SERVICE_NAME,serviceName)
+            put(FIELD_TOKEN, token)
         }
         db.insert(TABLE_APPS,null,values)
     }
 
-    fun unregisterApp(packageName: String, uid: Int){
+    fun unregisterApp(packageName: String, token: String){
         val db = writableDatabase
-        val selection = "$FIELD_PACKAGE_NAME = ? AND $FIELD_UID = ?"
-        val selectionArgs = arrayOf(packageName,uid.toString())
+        val selection = "$FIELD_PACKAGE_NAME = ? AND $FIELD_TOKEN = ?"
+        val selectionArgs = arrayOf(packageName,token)
         db.delete(TABLE_APPS,selection,selectionArgs)
     }
 
@@ -68,10 +65,10 @@ class MessagingDatabase(context: Context) : SQLiteOpenHelper(context, DB_NAME, n
         }
     }
 
-    fun strictIsRegistered(packageName: String, uid: Int): Boolean {
+    fun strictIsRegistered(packageName: String, token: String): Boolean {
         val db = readableDatabase
-        val selection = "$FIELD_PACKAGE_NAME = ? AND $FIELD_UID = ?"
-        val selectionArgs = arrayOf(packageName,uid.toString())
+        val selection = "$FIELD_PACKAGE_NAME = ? AND $FIELD_TOKEN = ?"
+        val selectionArgs = arrayOf(packageName,token)
         return db.query(
                 TABLE_APPS,
                 null,
@@ -85,9 +82,9 @@ class MessagingDatabase(context: Context) : SQLiteOpenHelper(context, DB_NAME, n
         }
     }
 
-    fun getServiceName(packageName: String): String{
+    fun getToken(packageName: String): String{
         val db = readableDatabase
-        val projection = arrayOf(FIELD_SERVICE_NAME)
+        val projection = arrayOf(FIELD_TOKEN)
         val selection = "$FIELD_PACKAGE_NAME = ?"
         val selectionArgs = arrayOf(packageName)
         return db.query(
@@ -99,7 +96,7 @@ class MessagingDatabase(context: Context) : SQLiteOpenHelper(context, DB_NAME, n
                 null,
                 null
         ).use { cursor ->
-            if (cursor.moveToFirst()) cursor.getString(cursor.getColumnIndex(FIELD_SERVICE_NAME)) else ""
+            if (cursor.moveToFirst()) cursor.getString(cursor.getColumnIndex(FIELD_TOKEN)) else ""
         }
     }
 

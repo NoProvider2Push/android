@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.flyingpanda.noprovider2push.R
 import com.flyingpanda.noprovider2push.services.Listener
 import com.flyingpanda.noprovider2push.services.MessagingDatabase
+import com.flyingpanda.noprovider2push.services.sendUnregistered
 
 
 class MainActivity : AppCompatActivity() {
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                     alert.setTitle("Unregistering")
                     alert.setMessage("Are you sure to unregister ${appList[position]} ?")
                     alert.setPositiveButton("YES") { dialog, _ ->
+                        sendUnregistered(this,appList[position],true)
                         val db = MessagingDatabase(this)
                         db.forceUnregisterApp(appList[position])
                         appList = db.listApps()
