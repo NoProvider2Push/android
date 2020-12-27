@@ -28,10 +28,15 @@
             </intent-filter>
         </activity>
         <service android:name=".services.Listener" android:enabled="true" />
-        <service android:name=".services.RegisterService" android:exported="true"/>
         <receiver android:enabled="true" android:name=".services.StartReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:enabled="true" android:name=".services.RegisterBroadcastReceiver">
+            <intent-filter>
+                <action android:name="org.unifiedpush.android.distributor.REGISTER"/>
+                <action android:name="org.unifiedpush.android.distributor.UNREGISTER"/>
             </intent-filter>
         </receiver>
     </application>
