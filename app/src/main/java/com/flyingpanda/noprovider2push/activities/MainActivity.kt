@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                     alert.setTitle("Unregistering")
                     alert.setMessage("Are you sure to unregister ${appList[position]} ?")
                     alert.setPositiveButton("YES") { dialog, _ ->
-                        sendUnregistered(this,appList[position],true)
+                        sendUnregistered(this,appList[position],null)
                         val db = MessagingDatabase(this)
                         db.forceUnregisterApp(appList[position])
                         appList = db.listApps()
