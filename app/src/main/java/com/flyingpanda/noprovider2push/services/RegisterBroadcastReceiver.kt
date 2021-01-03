@@ -20,7 +20,7 @@ class RegisterBroadcastReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun registerApp(db: MessagingDatabase, application: String, token: String) {
+    private fun registerApp(context: Context?, db: MessagingDatabase, application: String, token: String) {
         if (application.isBlank()) {
             Log.w("RegisterService","Trying to register an app without packageName")
             return
@@ -36,7 +36,9 @@ class RegisterBroadcastReceiver : BroadcastReceiver() {
         // User should unregister this app manually
         // to avoid an app to impersonate another one
         if (db.isRegistered(application)) {
-            Log.w("RegisterService","$application already registered with a different token")
+            val message = "$application already registered with a different token"
+            Log.w("RegisterService",message)
+            sendRegistrationRefused(context!!,application,token,message)
             return
         }
 
@@ -45,13 +47,13 @@ class RegisterBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         when (intent!!.action) {
-            REGISTER ->{
+            ACTION_REGISTER ->{
                 Log.i("Register","REGISTER")
-                val token = intent.getStringExtra("token")?: ""
-                val application = intent.getStringExtra("application")?: ""
+                val token = intent.getStringExtra(EXTRA_TOKEN)?: ""
+                val application = intent.getStringExtra(EXTRA_APPLICATION)?: ""
                 thread(start = true) {
                     val db = MessagingDatabase(context!!)
-                    registerApp(db, application, token)
+                    registerApp(context, db, application, token)
                     db.close()
                     Log.i("RegisterService","Registration is finished")
                 }.join()
@@ -61,10 +63,10 @@ class RegisterBroadcastReceiver : BroadcastReceiver() {
                         "/$address:$listeningPort/$application/"
                 sendEndpoint(context,application,endpoint)
             }
-            UNREGISTER ->{
+            ACTION_UNREGISTER ->{
                 Log.i("Register","UNREGISTER")
-                val token = intent.getStringExtra("token")?: ""
-                val application = intent.getStringExtra("application")?: ""
+                val token = intent.getStringExtra(EXTRA_TOKEN)?: ""
+                val application = intent.getStringExtra(EXTRA_APPLICATION)?: ""
                 thread(start = true) {
                     val db = MessagingDatabase(context!!)
                     unregisterApp(db,application, token)
