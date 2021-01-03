@@ -97,7 +97,7 @@ class Listener: Service(){
         return builder
                 .setContentTitle("NoProvider2Push")
                 .setContentText("Listening")
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_launcher_notification)
                 .setTicker("Listening")
                 .setPriority(Notification.PRIORITY_LOW) // for under android 26 compatibility
                 .build()
