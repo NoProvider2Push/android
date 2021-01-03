@@ -5,10 +5,6 @@ package com.flyingpanda.noprovider2push.services
  * https://github.com/UnifiedPush/UP-spec/blob/main/specifications.md
  */
 
-const val PREF_MASTER = "UP-lib"
-const val PREF_MASTER_TOKEN = "UP-lib_token"
-const val PREF_MASTER_DISTRIBUTOR = "UP-lib_distributor"
-
 const val ACTION_NEW_ENDPOINT = "org.unifiedpush.android.connector.NEW_ENDPOINT"
 const val ACTION_REGISTRATION_FAILED = "org.unifiedpush.android.connector.REGISTRATION_FAILED"
 const val ACTION_REGISTRATION_REFUSED = "org.unifiedpush.android.connector.REGISTRATION_REFUSED"
