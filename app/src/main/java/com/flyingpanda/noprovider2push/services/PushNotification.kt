@@ -8,8 +8,9 @@ import android.util.Log
  * These functions are used to send messages to other apps
  */
 
-fun sendMessage(context: Context, application: String, message: String){
-    val token = getToken(context,application)!!
+fun sendMessage(context: Context, application: String, token: String, message: String){
+    if (getToken(context,application)!! != token)
+        return
     val broadcastIntent = Intent()
     broadcastIntent.`package` = application
     broadcastIntent.action = ACTION_MESSAGE
