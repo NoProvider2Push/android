@@ -1,20 +1,22 @@
 # NoProvider2Push
 
-NoProvider2Push is able to provide push notifications without a push provider. For this, it needs a static address even with the roaming. It is achievable with a custom network such as a VPN (eg. wireguard) or the yggdrasil network.
+NoProvider2Push is a [UnifiedPush](https://github.com/UnifiedPush) distributor able to provide push notifications without a push provider. For this, it needs a static address even with the roaming. It is achievable with a custom network such as a VPN (eg. wireguard) or the yggdrasil network.
 
 Push providers were introduced because mobile phones are always changing there IP address or behind a firewall. Being constantly connected to a server, named a push provider, is a solution and having a static address is another one. It can be achieved with a custom network.
 
 ## Address
 
-The address is the phone static address on the custom network. It is necessary to know where to forward the notifications. For the moment it has to be manually enter inside the app.
+The address is the phone static address on the custom network. 
 
-## Gateway
+It is necessary to know where to forward the notifications.
 
-The gateway is the proxy to forward requests inside the custom network, to reach the phone from the Internet.
+## Proxy
 
-cf [Serveur-Side Gateway](#server-side-gateway) to configure your own gateway.
+The proxy is able to forward requests inside the custom network, to reach the phone from the Internet.
 
-## Server-side Gateway
+Cf [Server-Side Proxy](#server-side-proxy) to configure your own proxy.
+
+## Server-side Proxy
 
 If you are a user, and you already have a gateway, you do not need to look here. 
 
@@ -33,10 +35,10 @@ location ~ ^/proxy/(?<address>[^:]+):(?<port>[^/]+)/(.*)$ {
 }
 ```
 
-Here, the port is fixed, because 1. it would expose every ports (localhost included) to the internet ; 2. the port is always the same inside the app.
+Here, the port is fixed, because 1. Otherwise it would expose every ports (localhost included) to the internet ; 2. The port is always the same inside the app.
 
-## To the app developpers
+## To the app developers
 
 If you are a user, you do not need to look here.
 
-If you want to use this to have push notifications on your app, or just to allow users to use this to have push notifications, you will need to embedded the [connector](https://github.com/NoProvider2Push/android-connector) in your application. You need to subscribe to push notification on the application server (for instance a messagerie server or a social media server) with the endpoint received during registration. You can additionnaly add some path (for instance `$endpoint/_needed_to_push`). The endpoint received during registration is composed like this `$user_gateway:$port/$application/` (for instance https://relay.example.tld/proxy/10.10.10.1:51515/com.flyingpanda.noprovider2pushtester/).
+This application is a UnifiedPush distributor. If you want to use this to have push notifications on your app, or just to allow users to use this to have push notifications, you will need to embedded the [UnifiedPush library](https://github.com/UnifiedPush/UP-lib) in your application.
