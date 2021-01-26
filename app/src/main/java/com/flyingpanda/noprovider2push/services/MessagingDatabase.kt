@@ -100,6 +100,24 @@ class MessagingDatabase(context: Context) : SQLiteOpenHelper(context, DB_NAME, n
         }
     }
 
+    fun getApp(token: String): String{
+        val db = readableDatabase
+        val projection = arrayOf(FIELD_PACKAGE_NAME)
+        val selection = "$FIELD_TOKEN = ?"
+        val selectionArgs = arrayOf(token)
+        return db.query(
+            TABLE_APPS,
+            projection,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            null
+        ).use { cursor ->
+            if (cursor.moveToFirst()) cursor.getString(cursor.getColumnIndex(FIELD_PACKAGE_NAME)) else ""
+        }
+    }
+
     fun listApps(): List<String>{
         val db = readableDatabase
         val projection = arrayOf(FIELD_PACKAGE_NAME)

@@ -57,14 +57,13 @@ class Listener: Service(){
                     get("/") {
                         call.respond("ok")
                     }
-                    post("/{application}/{token}/{...}") {
+                    post("/{token}/{...}") {
                         call.respond("ok")
-                        val application = call.parameters["application"]
                         val token = call.parameters["token"]!!
-                        Log.i("Listener", "Received request to $application")
+                        Log.i("Listener", "Received request to $token")
                         val parameters = call.receiveText()
                         application?.let {
-                            sendMessage(context, application, token, parameters)
+                            sendMessage(context, token, parameters)
                         }
                     }
                 }

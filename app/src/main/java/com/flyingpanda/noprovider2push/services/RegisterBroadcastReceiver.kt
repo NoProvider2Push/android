@@ -60,7 +60,7 @@ class RegisterBroadcastReceiver : BroadcastReceiver() {
                 val settings = context!!.getSharedPreferences("Config", Context.MODE_PRIVATE)
                 val address = settings?.getString("address","")
                 val endpoint = settings?.getString("proxy","") +
-                        "/$address:$listeningPort/$application/$token/"
+                        "/$address:$listeningPort/$token/"
                 sendEndpoint(context,application,endpoint)
             }
             ACTION_UNREGISTER ->{

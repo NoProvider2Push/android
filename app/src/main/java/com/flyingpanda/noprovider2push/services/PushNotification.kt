@@ -8,9 +8,8 @@ import android.util.Log
  * These functions are used to send messages to other apps
  */
 
-fun sendMessage(context: Context, application: String, token: String, message: String){
-    if (getToken(context,application)!! != token)
-        return
+fun sendMessage(context: Context, token: String, message: String){
+    val application = getApp(context, token)!!
     val broadcastIntent = Intent()
     broadcastIntent.`package` = application
     broadcastIntent.action = ACTION_MESSAGE
@@ -60,9 +59,22 @@ fun getToken(context: Context, application: String): String?{
     val db = MessagingDatabase(context)
     val token = db.getToken(application)
     db.close()
-    if (token.isBlank()) {
+    return if (token.isBlank()) {
         Log.w("notifyClient", "No token found for $application")
-        return null
+        null
+    } else {
+        token
     }
-    return token
+}
+
+fun getApp(context: Context, token: String): String?{
+    val db = MessagingDatabase(context)
+    val app = db.getApp(token)
+    db.close()
+    return if (app.isBlank()) {
+        Log.w("notifyClient", "No app found for $token")
+        null
+    } else {
+        app
+    }
 }
