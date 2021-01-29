@@ -78,3 +78,11 @@ fun getApp(context: Context, token: String): String?{
         app
     }
 }
+fun getEndpoint(context: Context, application: String): String {
+    val db = MessagingDatabase(context)
+    val appToken = db.getToken(application)
+    val settings = context.getSharedPreferences("Config", Context.MODE_PRIVATE)
+    val address = settings?.getString("address","")
+    return settings?.getString("proxy","") +
+            "/$address:$listeningPort/$appToken/"
+}

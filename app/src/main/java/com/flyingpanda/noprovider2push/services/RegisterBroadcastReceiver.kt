@@ -57,11 +57,7 @@ class RegisterBroadcastReceiver : BroadcastReceiver() {
                     db.close()
                     Log.i("RegisterService","Registration is finished")
                 }.join()
-                val settings = context!!.getSharedPreferences("Config", Context.MODE_PRIVATE)
-                val address = settings?.getString("address","")
-                val endpoint = settings?.getString("proxy","") +
-                        "/$address:$listeningPort/$token/"
-                sendEndpoint(context,application,endpoint)
+                sendEndpoint(context!!, application, getEndpoint(context, application))
             }
             ACTION_UNREGISTER ->{
                 Log.i("Register","UNREGISTER")

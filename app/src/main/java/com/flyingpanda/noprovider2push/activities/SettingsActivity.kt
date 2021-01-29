@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.EditText
 import com.flyingpanda.noprovider2push.R
 import com.flyingpanda.noprovider2push.services.MessagingDatabase
+import com.flyingpanda.noprovider2push.services.getEndpoint
 import com.flyingpanda.noprovider2push.services.listeningPort
 import com.flyingpanda.noprovider2push.services.sendEndpoint
 
@@ -35,13 +36,10 @@ class SettingsActivity : AppCompatActivity() {
         editor.putString("proxy", proxy)
         editor.commit()
         val db = MessagingDatabase(this)
-        var appList = db.listApps()
+        val appList = db.listApps()
         db.close()
-        val settings = this.getSharedPreferences("Config", Context.MODE_PRIVATE)
         appList.forEach{
-            val endpoint = settings?.getString("proxy","") +
-                    "/$address:$listeningPort/$it/"
-            sendEndpoint(this,it,endpoint)
+            sendEndpoint(this, it, getEndpoint(this, it))
         }
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
