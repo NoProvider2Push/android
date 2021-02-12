@@ -1,4 +1,4 @@
-package com.flyingpanda.noprovider2push.services
+package org.unifiedpush.distributor.noprovider2push.services
 
 import android.content.ContentValues
 import android.content.Context

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flyingpanda.noprovider2push">
+    package="org.unifiedpush.distributor.noprovider2push">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
@@ -14,11 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NoProvider2Push">
-        <activity android:name=".activities.SettingsActivity"
+        <activity android:name="org.unifiedpush.distributor.noprovider2push.activities.SettingsActivity"
             android:label="@string/action_settings"
-            android:parentActivityName=".activities.MainActivity" />
+            android:parentActivityName="org.unifiedpush.distributor.noprovider2push.activities.MainActivity" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name="org.unifiedpush.distributor.noprovider2push.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.NoProvider2Push.NoActionBar">
             <intent-filter>
@@ -27,13 +27,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".services.Listener" android:enabled="true" />
-        <receiver android:enabled="true" android:name=".services.StartReceiver">
+        <service android:name="org.unifiedpush.distributor.noprovider2push.services.Listener" android:enabled="true" />
+        <receiver android:enabled="true" android:name="org.unifiedpush.distributor.noprovider2push.services.StartReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-        <receiver android:enabled="true" android:name=".services.RegisterBroadcastReceiver">
+        <receiver android:enabled="true" android:name="org.unifiedpush.distributor.noprovider2push.services.RegisterBroadcastReceiver">
             <intent-filter>
                 <action android:name="org.unifiedpush.android.distributor.REGISTER"/>
                 <action android:name="org.unifiedpush.android.distributor.UNREGISTER"/>

@@ -1,4 +1,4 @@
-package com.flyingpanda.noprovider2push.activities
+package org.unifiedpush.distributor.noprovider2push.activities
 
 import android.content.Context
 import android.content.Intent
@@ -8,11 +8,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
-import com.flyingpanda.noprovider2push.R
-import com.flyingpanda.noprovider2push.services.MessagingDatabase
-import com.flyingpanda.noprovider2push.services.getEndpoint
-import com.flyingpanda.noprovider2push.services.listeningPort
-import com.flyingpanda.noprovider2push.services.sendEndpoint
+import org.unifiedpush.distributor.noprovider2push.R
+import org.unifiedpush.distributor.noprovider2push.services.MessagingDatabase
+import org.unifiedpush.distributor.noprovider2push.services.getEndpoint
+import org.unifiedpush.distributor.noprovider2push.services.sendEndpoint
 
 class SettingsActivity : AppCompatActivity() {
     private var prefs: SharedPreferences? = null

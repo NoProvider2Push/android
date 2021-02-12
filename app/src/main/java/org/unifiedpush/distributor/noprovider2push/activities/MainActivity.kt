@@ -1,4 +1,4 @@
-package com.flyingpanda.noprovider2push.activities
+package org.unifiedpush.distributor.noprovider2push.activities
 
 import android.content.Context
 import android.content.Intent
@@ -11,10 +11,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import com.flyingpanda.noprovider2push.R
-import com.flyingpanda.noprovider2push.services.Listener
-import com.flyingpanda.noprovider2push.services.MessagingDatabase
-import com.flyingpanda.noprovider2push.services.sendUnregistered
+import org.unifiedpush.distributor.noprovider2push.R
+import org.unifiedpush.distributor.noprovider2push.services.Listener
+import org.unifiedpush.distributor.noprovider2push.services.MessagingDatabase
+import org.unifiedpush.distributor.noprovider2push.services.sendUnregistered
 
 
 class MainActivity : AppCompatActivity() {

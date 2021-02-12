@@ -1,4 +1,4 @@
-package com.flyingpanda.noprovider2push.services
+package org.unifiedpush.distributor.noprovider2push.services
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -10,7 +10,7 @@ import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
-import com.flyingpanda.noprovider2push.R
+import org.unifiedpush.distributor.noprovider2push.R
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.gson.*
