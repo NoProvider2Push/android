@@ -35,9 +35,9 @@ class SettingsActivity : AppCompatActivity() {
         editor.putString("proxy", proxy)
         editor.commit()
         val db = MessagingDatabase(this)
-        val appList = db.listApps()
+        val tokenList = db.listTokens()
         db.close()
-        appList.forEach{
+        tokenList.forEach {
             sendEndpoint(this, it, getEndpoint(this, it))
         }
         val intent = Intent(this, MainActivity::class.java)

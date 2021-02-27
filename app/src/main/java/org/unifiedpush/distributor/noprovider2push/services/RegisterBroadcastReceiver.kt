@@ -13,11 +13,8 @@ import kotlin.concurrent.thread
 class RegisterBroadcastReceiver : BroadcastReceiver() {
 
     private fun unregisterApp(db: MessagingDatabase, application: String, token: String) {
-        // we only trust unregistered demands from the uid who registered the app
-        if (db.strictIsRegistered(application, token)) {
-            Log.i("RegisterService","Unregistering $application token: $token")
-            db.unregisterApp(application, token)
-        }
+        Log.i("RegisterService","Unregistering $application token: $token")
+        db.unregisterApp(token)
     }
 
     private fun registerApp(context: Context?, db: MessagingDatabase, application: String, token: String) {
@@ -30,15 +27,6 @@ class RegisterBroadcastReceiver : BroadcastReceiver() {
         // the client may need its endpoint again
         if (db.strictIsRegistered(application, token)) {
             Log.i("RegisterService","$application already registered")
-            return
-        }
-        // The app is registered with a new token.
-        // User should unregister this app manually
-        // to avoid an app to impersonate another one
-        if (db.isRegistered(application)) {
-            val message = "$application already registered with a different token"
-            Log.w("RegisterService",message)
-            sendRegistrationRefused(context!!,application,token,message)
             return
         }
 
@@ -57,7 +45,7 @@ class RegisterBroadcastReceiver : BroadcastReceiver() {
                     db.close()
                     Log.i("RegisterService","Registration is finished")
                 }.join()
-                sendEndpoint(context!!, application, getEndpoint(context, application))
+                sendEndpoint(context!!, token, getEndpoint(context, token))
             }
             ACTION_UNREGISTER ->{
                 Log.i("Register","UNREGISTER")
@@ -69,7 +57,7 @@ class RegisterBroadcastReceiver : BroadcastReceiver() {
                     db.close()
                     Log.i("RegisterService","Unregistration is finished")
                 }
-                sendUnregistered(context!!,application,token)
+                sendUnregistered(context!!, token)
             }
         }
     }
