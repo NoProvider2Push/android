@@ -14,7 +14,7 @@ It is necessary to know where to forward the notifications.
 
 The proxy is able to forward requests inside the custom network, to reach the phone from the Internet.
 
-Cf [Server-Side Proxy](#server-side-proxy) to configure your own proxy.
+Cf [Server-Side Proxy](#server-side-proxy) to configure your own proxy using nginx or [Enqueued Proxy](https://github.com/NoProvider2Push/enqueued-proxy) to not lose any message in case of deconnection.
 
 ## Server-side Proxy
 
