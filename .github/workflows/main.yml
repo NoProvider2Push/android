@@ -24,7 +24,7 @@ jobs:
           jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore release-key.jks -storepass $STOREPASS -keypass $KEYPASS app-release-unsigned.apk np2p
           jarsigner -verify app-release-unsigned.apk
           sudo apt-get install zipalign -y
-          zipalign -v 4 app-release-unsigned.apk UP-Distrib.apk
+          zipalign -v 4 app-release-unsigned.apk np2p.apk
         env:
           RELEASE_KEY: ${{ secrets.RELEASE_KEY }}
           KEYPASS: ${{ secrets.KEYPASS }}
@@ -33,6 +33,6 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: app/build/outputs/apk/release/UP-Distrib.apk
+          file: app/build/outputs/apk/release/np2p.apk
           tag: ${{ github.ref }}
           overwrite: true
