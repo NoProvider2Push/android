@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- Strings used on the main page -->
-    <string name="main_about">NoProvider2Push is able to provide push notifications without a push provider. For this, it needs a static address even with the roaming. It is achievable with a custom network such as a VPN or the yggdrasil network.</string>
+    <string name="main_about">NoProvider2Push is able to provide push notifications without a push provider. For this, it needs a static address even with the roaming. It is achievable with a custom network like a VPN.</string>
     <string name="main_applications_title">Registered applications</string>
 
     <!-- Strings used for configuration -->
