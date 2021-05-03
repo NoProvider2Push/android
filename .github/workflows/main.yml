@@ -21,7 +21,7 @@ jobs:
         run: |
           cd app/build/outputs/apk/release
           echo $RELEASE_KEY | base64 -d > release-key.jks
-          jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore release-key.jks -storepass $STOREPASS -keypass $KEYPASS app-release-unsigned.apk unifiedpush
+          jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore release-key.jks -storepass $STOREPASS -keypass $KEYPASS app-release-unsigned.apk noprovider2push
           jarsigner -verify app-release-unsigned.apk
           sudo apt-get install zipalign -y
           zipalign -v 4 app-release-unsigned.apk UP-Distrib.apk
