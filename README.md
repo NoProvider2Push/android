@@ -4,6 +4,10 @@ NoProvider2Push is a [UnifiedPush](https://github.com/UnifiedPush) distributor a
 
 Push providers were introduced because mobile phones are always changing there IP address or behind a firewall. Being constantly connected to a server, named a push provider, is a solution and having a static address is another one. It can be achieved with a custom network.
 
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/org.unifiedpush.distributor.noprovider2push/)
+
 ## Address
 
 The address is the phone static address on the custom network. 
