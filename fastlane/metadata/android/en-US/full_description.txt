@@ -1,6 +1,6 @@
-NoProvider2Push is a UnifiedPush distributor able to provide push notifications without a push provider. 
+NoProvider2Push is a UnifiedPush distributor able to provide push notifications without a push provider. It's a pretty niche UnifiedPush distributor mostly useful for development purposes and advanced users at this moment.
 
-For this, it needs a static address even with the roaming. It is achievable with a custom network such as a VPN (eg. wireguard) or the yggdrasil network.
+To work, it needs a static address even with the roaming. It is achievable with a custom network such as a VPN (eg. wireguard) or the yggdrasil network.
 
 For more information about UnifiedPush, visit https://unifiedpush.org
 
