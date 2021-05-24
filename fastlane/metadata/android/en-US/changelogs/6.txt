@@ -1,0 +1,2 @@
+* follow UP server spec: SERV_1.0.0
+* update dependencies
