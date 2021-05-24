@@ -31,8 +31,8 @@ The gateway is only needed to expose the ports of the phones to Internet.
 For instance, it can be done with a simple nginx configuration:
 
 ```
-location ~ ^/proxy/allowed.address:51515/(.*)$ {
-    proxy_pass                 http://allowed.address:51515/$1;
+location /proxy/allowed.address:51515/ {
+    proxy_pass                 http://allowed.address:51515/;
     client_max_body_size        50M;
     # Force https
     if ($scheme = http) {
