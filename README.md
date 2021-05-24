@@ -4,6 +4,8 @@ NoProvider2Push is a [UnifiedPush](https://github.com/UnifiedPush) distributor a
 
 Push providers were introduced because mobile phones are always changing there IP address or behind a firewall. Being constantly connected to a server, named a push provider, is a solution and having a static address is another one. It can be achieved with a custom network.
 
+NoProvider2Push is a pretty niche UnifiedPush distributor mostly useful for development purposes and advanced users at this moment.
+
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"
      height="80">](https://f-droid.org/packages/org.unifiedpush.distributor.noprovider2push/)
@@ -29,8 +31,8 @@ The gateway is only needed to expose the ports of the phones to Internet.
 For instance, it can be done with a simple nginx configuration:
 
 ```
-location ~ ^/proxy/(?<address>[^:]+):(?<port>[^/]+)/(.*)$ {
-    proxy_pass                 http://$address:51515/$3;
+location ~ ^/proxy/allow.address:51515/(.*)$ {
+    proxy_pass                 http://allow.address:51515/$1;
     client_max_body_size        50M;
     # Force https
     if ($scheme = http) {
@@ -45,4 +47,4 @@ Here, the port is fixed, because 1. Otherwise it would expose every ports (local
 
 If you are a user, you do not need to look here.
 
-This application is a UnifiedPush distributor. If you want to use this to have push notifications on your app, or just to allow users to use this to have push notifications, you will need to embedded the [UnifiedPush library](https://github.com/UnifiedPush/UP-lib) in your application.
+This application is a UnifiedPush distributor. If you want to use this to have push notifications on your app, or just to allow users to use this to have push notifications, you will need to embedded the [UnifiedPush library](https://unifiedpush.org/developers/android/) in your application.
