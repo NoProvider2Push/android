@@ -67,7 +67,7 @@ class Listener: Service(){
                             sendMessage(context, token, parameters)
                         }
                     }
-                    post("/{token}/") { // To fix KTOR tailcard issue
+                    post("/{token}/{...}/") { // To fix KTOR tailcard issue
                         call.respond(HttpStatusCode.Accepted,"{\"Status\":\"Accepted\"}")
                         val token = call.parameters["token"]!!
                         Log.i("Listener", "Received request to $token")
