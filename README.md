@@ -32,7 +32,7 @@ For instance, it can be done with a simple nginx configuration:
 
 ```
 location ~ ^/proxy/allowed.address:51515/(.*)$ {
-    proxy_pass                 http://allow.address:51515/$1;
+    proxy_pass                 http://allowed.address:51515/$1;
     client_max_body_size        50M;
     # Force https
     if ($scheme = http) {
