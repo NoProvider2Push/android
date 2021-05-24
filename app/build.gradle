@@ -19,10 +19,12 @@ android {
 
     buildTypes {
         release {
+            resValue "string", "app_name", "NoProvider2Push"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
+            resValue "string", "app_name", "NP2P-dbg"
             applicationIdSuffix ".debug"
         }
     }
