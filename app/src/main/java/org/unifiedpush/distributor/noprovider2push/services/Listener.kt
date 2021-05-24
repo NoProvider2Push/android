@@ -14,6 +14,7 @@ import org.unifiedpush.distributor.noprovider2push.R
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.gson.*
+import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -55,10 +56,19 @@ class Listener: Service(){
                 }
                 routing {
                     get("/") {
-                        call.respond("ok")
+                        call.respond("{\"unifiedpush\":{\"version\":1}}")
                     }
                     post("/{token}/{...}") {
-                        call.respond("ok")
+                        call.respond(HttpStatusCode.Accepted,"{\"Status\":\"Accepted\"}")
+                        val token = call.parameters["token"]!!
+                        Log.i("Listener", "Received request to $token")
+                        val parameters = call.receiveText()
+                        application?.let {
+                            sendMessage(context, token, parameters)
+                        }
+                    }
+                    post("/{token}/") { // To fix KTOR tailcard issue
+                        call.respond(HttpStatusCode.Accepted,"{\"Status\":\"Accepted\"}")
                         val token = call.parameters["token"]!!
                         Log.i("Listener", "Received request to $token")
                         val parameters = call.receiveText()
