@@ -31,7 +31,7 @@ The gateway is only needed to expose the ports of the phones to Internet.
 For instance, it can be done with a simple nginx configuration:
 
 ```
-location ~ ^/proxy/allow.address:51515/(.*)$ {
+location ~ ^/proxy/allowed.address:51515/(.*)$ {
     proxy_pass                 http://allow.address:51515/$1;
     client_max_body_size        50M;
     # Force https
@@ -40,8 +40,6 @@ location ~ ^/proxy/allow.address:51515/(.*)$ {
      }
 }
 ```
-
-Here, the port is fixed, because 1. Otherwise it would expose every ports (localhost included) to the internet ; 2. The port is always the same inside the app.
 
 ## To the app developers
 
