@@ -24,6 +24,8 @@ class SettingsActivity : AppCompatActivity() {
         val proxy = prefs?.getString("proxy", "")
         findViewById<EditText>(R.id.settings_address_value).setText(address)
         findViewById<EditText>(R.id.settings_proxy_value).setText(proxy)
+        val btn = findViewById<View>(R.id.settings_save_button)
+        btn.setOnClickListener { v -> save(v) }
     }
 
     fun save(view: View){
