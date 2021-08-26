@@ -42,7 +42,7 @@ android {
 
 }
 
-ext.ktor_version = '1.6.2'
+ext.ktor_version = '1.6.3'
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
