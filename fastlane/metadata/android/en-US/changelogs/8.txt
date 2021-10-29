@@ -1,2 +1,4 @@
 [!] You will need to re-register your apps
 
+* Dependencies
+* Lint code
