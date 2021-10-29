@@ -25,7 +25,7 @@ class RegisterBroadcastReceiver : BroadcastReceiver() {
         Log.i("RegisterService","registering $application token: $token")
         // The app is registered with the same token : we re-register it
         // the client may need its endpoint again
-        if (db.strictIsRegistered(application, token)) {
+        if (db.isRegistered(application, token)) {
             Log.i("RegisterService","$application already registered")
             return
         }

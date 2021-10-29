@@ -5,10 +5,11 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-private const val DB_NAME = "gotify_service"
+private const val DB_NAME = "apps_db"
 private const val DB_VERSION = 1
 
-class MessagingDatabase(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION){
+class MessagingDatabase(context: Context):
+    SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     private val CREATE_TABLE_APPS = "CREATE TABLE apps (" +
             "package_name TEXT," +
             "token TEXT," +
@@ -17,7 +18,7 @@ class MessagingDatabase(context: Context) : SQLiteOpenHelper(context, DB_NAME, n
     private val FIELD_PACKAGE_NAME = "package_name"
     private val FIELD_TOKEN = "token"
 
-    override fun onCreate(db: SQLiteDatabase){
+    override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(CREATE_TABLE_APPS)
     }
 
@@ -25,26 +26,26 @@ class MessagingDatabase(context: Context) : SQLiteOpenHelper(context, DB_NAME, n
         throw IllegalStateException("Upgrades not supported")
     }
 
-    fun registerApp(packageName: String, token: String){
+    fun registerApp(packageName: String, token: String) {
         val db = writableDatabase
         val values = ContentValues().apply {
             put(FIELD_PACKAGE_NAME, packageName)
             put(FIELD_TOKEN, token)
         }
-        db.insert(TABLE_APPS,null,values)
+        db.insert(TABLE_APPS, null, values)
     }
 
-    fun unregisterApp(token: String){
+    fun unregisterApp(token: String) {
         val db = writableDatabase
         val selection = "$FIELD_TOKEN = ?"
         val selectionArgs = arrayOf(token)
-        db.delete(TABLE_APPS,selection,selectionArgs)
+        db.delete(TABLE_APPS, selection, selectionArgs)
     }
 
-    fun strictIsRegistered(packageName: String, token: String): Boolean {
+    fun isRegistered(packageName: String, token: String): Boolean {
         val db = readableDatabase
         val selection = "$FIELD_PACKAGE_NAME = ? AND $FIELD_TOKEN = ?"
-        val selectionArgs = arrayOf(packageName,token)
+        val selectionArgs = arrayOf(packageName, token)
         return db.query(
                 TABLE_APPS,
                 null,
@@ -58,7 +59,7 @@ class MessagingDatabase(context: Context) : SQLiteOpenHelper(context, DB_NAME, n
         }
     }
 
-    fun getApp(token: String): String{
+    fun getPackageName(token: String): String {
         val db = readableDatabase
         val projection = arrayOf(FIELD_PACKAGE_NAME)
         val selection = "$FIELD_TOKEN = ?"
@@ -77,7 +78,7 @@ class MessagingDatabase(context: Context) : SQLiteOpenHelper(context, DB_NAME, n
         }
     }
 
-    fun listTokens(): List<String>{
+    fun listTokens(): List<String> {
         val db = readableDatabase
         val projection = arrayOf(FIELD_TOKEN)
         return db.query(

@@ -46,27 +46,9 @@ fun sendUnregistered(context: Context, token: String) {
     context.sendBroadcast(broadcastIntent)
 }
 
-fun sendRegistrationFailed(context: Context, application: String, token: String, message: String) {
-    val broadcastIntent = Intent()
-    broadcastIntent.`package` = application
-    broadcastIntent.action = ACTION_REGISTRATION_FAILED
-    broadcastIntent.putExtra(EXTRA_TOKEN, token)
-    broadcastIntent.putExtra(EXTRA_MESSAGE, message)
-    context.sendBroadcast(broadcastIntent)
-}
-
-fun sendRegistrationRefused(context: Context, application: String, token: String, message: String){
-    val broadcastIntent = Intent()
-    broadcastIntent.`package` = application
-    broadcastIntent.action = ACTION_REGISTRATION_REFUSED
-    broadcastIntent.putExtra(EXTRA_TOKEN, token)
-    broadcastIntent.putExtra(EXTRA_MESSAGE, message)
-    context.sendBroadcast(broadcastIntent)
-}
-
 fun getApp(context: Context, token: String): String?{
     val db = MessagingDatabase(context)
-    val app = db.getApp(token)
+    val app = db.getPackageName(token)
     db.close()
     return if (app.isBlank()) {
         Log.w("notifyClient", "No app found for $token")

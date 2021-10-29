@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         val tokenList = db.listTokens().toMutableList()
         val appList = emptyArray<String>().toMutableList()
         tokenList.forEach {
-            appList.add(db.getApp(it))
+            appList.add(db.getPackageName(it))
         }
         db.close()
         listView.adapter = ArrayAdapter(
